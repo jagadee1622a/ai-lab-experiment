@@ -1,0 +1,29 @@
+def minimax(stones, turn, alpha, beta):
+    if stones == 0: return -1 if turn else 1
+    best = -2 if turn else 2
+    for i in range(1, 4):
+        if stones >= i:
+            val = minimax(stones - i, not turn, alpha, beta)
+            best = max(best, val) if turn else min(best, val)
+            if turn: alpha = max(alpha, best)
+            else: beta = min(beta, best)
+            if beta <= alpha: break
+    return best
+
+def best_move(stones):
+    for i in range(1, 4):
+        if stones >= i and minimax(stones - i, False, -2, 2) == 1:
+            return i
+    return 1
+
+stones = 10
+while stones > 0:
+    print("Stones:", stones)
+    p = int(input("Your move (1-3): "))
+    if p not in [1,2,3] or p > stones: continue
+    stones -= p
+    if stones == 0: print("You win!"); break
+    ai = best_move(stones)
+    print("AI takes:", ai)
+    stones -= ai
+    if stones == 0: print("AI wins!")
