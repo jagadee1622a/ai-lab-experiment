@@ -1,0 +1,22 @@
+def vacuum_cleaner(loc, state):
+    if state == "Dirty":
+        print(f"Location: {loc}, Action: CLEAN")
+        state = "Clean"
+    if loc == "A":
+        print("Move to RIGHT")
+        loc = "B"
+    else:
+        print("Move to LEFT")
+        loc = "A"
+    return loc, state
+
+# Initial Conditions
+room = {'A': 'Dirty', 'B': 'Dirty'}
+location = 'A'
+
+# Run the vacuum agent
+for _ in range(2):
+    print(f"--- In Room {location} ---")
+    location, room[location] = vacuum_cleaner(location, room[location])
+
+print("\nFinal Room States:", room)
