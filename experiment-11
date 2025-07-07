@@ -1,0 +1,24 @@
+colors = ['Red', 'Green', 'Blue']
+neighbors = {
+  'WA': ['NT', 'SA'], 'NT': ['WA', 'SA', 'Q'],
+  'SA': ['WA', 'NT', 'Q', 'NSW', 'V'],
+  'Q': ['NT', 'SA', 'NSW'], 'NSW': ['Q', 'SA', 'V'],
+  'V': ['SA', 'NSW'], 'T': []
+}
+
+def is_safe(r, c, a):
+    return all(a.get(n) != c for n in neighbors[r])
+
+def solve(a):
+    if len(a) == len(neighbors): return a
+    for r in neighbors:
+        if r not in a:
+            for c in colors:
+                if is_safe(r, c, a):
+                    a[r] = c
+                    if solve(a): return a
+                    del a[r]
+            return None
+
+print(solve({}))
+
