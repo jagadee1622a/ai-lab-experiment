@@ -1,0 +1,28 @@
+from itertools import permutations
+
+# Distance between cities
+graph = [
+    [0, 10, 15, 20],
+    [10, 0, 35, 25],
+    [15, 35, 0, 30],
+    [20, 25, 30, 0]
+]
+
+def tsp(graph):
+    cities = [0, 1, 2, 3]
+    min_cost = float('inf')
+    best_path = []
+
+    for perm in permutations(cities[1:]):  # fix city 0 as start
+        path = [0] + list(perm) + [0]
+        cost = sum(graph[path[i]][path[i+1]] for i in range(len(path)-1))
+        if cost < min_cost:
+            min_cost = cost
+            best_path = path
+
+    return best_path, min_cost
+
+# Run and print result
+path, cost = tsp(graph)
+print("Best Path:", path)
+print("Total Cost:", cost)
