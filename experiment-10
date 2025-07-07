@@ -1,0 +1,14 @@
+def astar(start, goal):
+    path = [start]
+    x, y = start
+
+    while (x, y) != goal:
+        if x < goal[0]: x += 1
+        elif x > goal[0]: x -= 1
+        elif y < goal[1]: y += 1
+        elif y > goal[1]: y -= 1
+        path.append((x, y))
+    
+    return path
+
+print(astar((0, 0), (4, 4)))
