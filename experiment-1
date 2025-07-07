@@ -1,0 +1,45 @@
+from collections import deque
+
+goal = '123456780'
+
+def get_moves(state):
+    i = state.index('0')
+    moves = []
+    dirs = [(-1,0),(1,0),(0,-1),(0,1)]  # up, down, left, right
+    x, y = divmod(i, 3)
+    for dx, dy in dirs:
+        nx, ny = x + dx, y + dy
+        if 0 <= nx < 3 and 0 <= ny < 3:
+            j = nx * 3 + ny
+            lst = list(state)
+            lst[i], lst[j] = lst[j], lst[i]
+            moves.append(''.join(lst))
+    return moves
+
+def bfs(start):
+    q = deque([(start, [])])
+    visited = set()
+    while q:
+        state, path = q.popleft()
+        if state == goal:
+            return path + [state]
+        if state in visited:
+            continue
+        visited.add(state)
+        for move in get_moves(state):
+            q.append((move, path + [state]))
+    return None
+
+def print_puzzle(state):
+    for i in range(0, 9, 3):
+        print(state[i:i+3])
+    print()
+
+start = '123406758'
+solution = bfs(start)
+if solution:
+    for step in solution:
+        print_puzzle(step)
+else:
+    print("No solution")
+exp-1 ai
