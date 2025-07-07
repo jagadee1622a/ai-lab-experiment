@@ -1,0 +1,22 @@
+def water_jug():
+    a, b = 0, 0  # jug A = 4L, jug B = 3L
+
+    steps = []
+    while True:
+        if a == 2 or b == 2:
+            steps.append((a, b))
+            break
+        if a == 0:
+            a = 4  # fill A
+        elif b != 3:
+            transfer = min(a, 3 - b)
+            a -= transfer
+            b += transfer
+        else:
+            b = 0  # empty B
+        steps.append((a, b))
+
+    for s in steps:
+        print(f"Jug A: {s[0]}L, Jug B: {s[1]}L")
+
+water_jug() 
